@@ -9,6 +9,11 @@
     "lint": "eslint"
   },
   "dependencies": {
+    "@buf/safedep_api.bufbuild_es": "^2.10.2-20251219090155-880510487474.1",
+    "@buf/safedep_api.connectrpc_es": "^1.6.1-20251219090155-880510487474.2",
+    "@bufbuild/protobuf": "^2.10.2",
+    "@connectrpc/connect": "^2.1.1",
+    "@connectrpc/connect-node": "^2.1.1",
     "@radix-ui/react-slot": "^1.2.4",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
