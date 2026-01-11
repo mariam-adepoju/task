@@ -7,6 +7,7 @@ import {
 import { createClient } from "@connectrpc/connect";
 import { getTransport } from "./transport";
 import { toJson } from "@bufbuild/protobuf";
+import { PackageInsight } from "@/types/safedep";
 
 export async function getPackageInsights(
   ecosystem: Ecosystem,
@@ -18,8 +19,11 @@ export async function getPackageInsights(
     const res = await client.getPackageVersionInsight({
       packageVersion: { package: { ecosystem, name }, version },
     });
-    console.log(toJson(GetPackageVersionInsightResponseSchema, res));
-    return toJson(GetPackageVersionInsightResponseSchema, res);
+    // console.log(toJson(GetPackageVersionInsightResponseSchema, res));
+    return toJson(
+      GetPackageVersionInsightResponseSchema,
+      res
+    ) as unknown as PackageInsight;
   } catch (err) {
     console.error("Insights Fetch Error:", err);
     return null;

@@ -7,6 +7,7 @@ import {
 import { createClient, ConnectError, Code } from "@connectrpc/connect";
 import { getTransport } from "./transport";
 import { toJson } from "@bufbuild/protobuf";
+import { MalwareReport } from "@/types/safedep";
 
 export async function getPackageMalwareAnalysis(
   ecosystem: Ecosystem,
@@ -23,8 +24,11 @@ export async function getPackageMalwareAnalysis(
         },
       },
     });
-    console.log(toJson(QueryPackageAnalysisResponseSchema, res));
-    return toJson(QueryPackageAnalysisResponseSchema, res);
+    // console.log(toJson(QueryPackageAnalysisResponseSchema, res));
+    return toJson(
+      QueryPackageAnalysisResponseSchema,
+      res
+    ) as unknown as MalwareReport;
   } catch (err) {
     if (err instanceof ConnectError && err.code === Code.NotFound) {
       console.warn(`[Malware Analysis] No data for ${name}@${version}`);

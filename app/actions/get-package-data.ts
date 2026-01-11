@@ -13,9 +13,7 @@ export async function getPackageData(
   if (!ecosystem || !name || !version) {
     throw new Error("Ecosystem, name, and version are all required");
   }
-
   const ecoEnum = mapEcosystem(ecosystem);
-
   // Run RPC calls concurrently with try/catch to prevent runtime crash
   const [insights, malware] = await Promise.all([
     getPackageInsights(ecoEnum, name, version).catch((err) => {
@@ -31,7 +29,7 @@ export async function getPackageData(
   if (!insights && !malware) {
     throw new Error("No data available for this package");
   }
-
+  console.log("Fetched package data:", { insights, malware });
   return {
     insights,
     malware,
