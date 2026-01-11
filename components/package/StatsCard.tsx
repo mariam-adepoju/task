@@ -1,5 +1,6 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { LucideIcon } from "lucide-react";
+import { cn } from "@/lib/utils";
 
 interface StatCardProps {
     title: string;
@@ -7,19 +8,22 @@ interface StatCardProps {
     icon: LucideIcon;
     description?: string;
     valueColor?: string;
+    iconColor?: string;
 }
 
-export function StatCard({ title, value, icon: Icon, valueColor }: StatCardProps) {
+export function StatCard({ title, value, icon: Icon, valueColor, iconColor }: StatCardProps) {
     return (
-        <Card className="shadow-sm border-slate-200/60">
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                <CardTitle className="text-sm font-medium text-muted-foreground">
+        <Card className="border rounded-lg p-4 flex flex-col gap-6 ">
+            <CardHeader className="flex flex-row items-center gap-2 p-0">
+                <div className="p-1 rounded-lg bg-card border">
+                    <Icon size={15} className={cn(iconColor || "text-primary")} />
+                </div>
+                <CardTitle className="text-base font-normal p-0 text-slate-500">
                     {title}
                 </CardTitle>
-                <Icon className="h-4 w-4 text-muted-foreground/70" />
             </CardHeader>
-            <CardContent>
-                <div className={`text-2xl font-bold tracking-tight ${valueColor}`}>
+            <CardContent className="p-0">
+                <div className={cn("text-3xl font-medium text-foreground", valueColor)}>
                     {value}
                 </div>
             </CardContent>

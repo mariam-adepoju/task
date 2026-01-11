@@ -1,4 +1,4 @@
-import { ShieldAlert, Activity, FileText, Layers, Box } from "lucide-react";
+import { Info, Bug, FileBadge2, Award, Earth, } from "lucide-react";
 import { StatCard } from "./StatsCard";
 import { ConsolidatedPackageData } from "@/types/safedep";
 import { formatEcosystem } from "@/lib/utils";
@@ -15,22 +15,22 @@ export function StatsGrid({ data }: { data: ConsolidatedPackageData }) {
     const displayEcosystem = formatEcosystem(rawEcosystem);
 
     return (
-        <div className="grid grid-cols-1 md:grid-cols-5 gap-4 mb-8 bg-zinc-900/50 p-4 border-x border-zinc-800">
-            <StatCard title="Version" value={insights?.packageVersion?.version} icon={Box} />
+        <div className="grid grid-cols-1 md:grid-cols-5 gap-2">
+            <StatCard title="Version" value={insights?.packageVersion?.version} icon={Info} />
             <StatCard
                 title="Vulnerabilities"
                 value={vulnCount}
-                icon={ShieldAlert}
-                valueColor={vulnCount > 0 ? "text-red-500" : "text-green-500"}
+                icon={Bug}
+                iconColor="text-red-700"
             />
             <StatCard
                 title="OpenSSF Scorecard"
                 value={displayScore}
-                icon={Activity}
-                valueColor="text-emerald-500"
+                icon={FileBadge2}
+                valueColor="text-primary"
             />
-            <StatCard title="License" value={license} icon={FileText} />
-            <StatCard title="Ecosystem" value={displayEcosystem} icon={Layers} />
+            <StatCard title="License" value={license} icon={Award} />
+            <StatCard title="Ecosystem" value={displayEcosystem} icon={Earth} />
         </div>
     );
 }
