@@ -7,6 +7,7 @@ import {
     TableRow,
 } from "@/components/ui/table";
 import { LicenseInfo } from "@/types/safedep";
+import Link from "next/link";
 
 interface LicenseContainer {
     licenses: LicenseInfo[];
@@ -14,42 +15,40 @@ interface LicenseContainer {
 interface LicenseTableProps {
     licenses: LicenseContainer | undefined | null;
 }
-
 export function LicenseTable({ licenses }: LicenseTableProps) {
     const licenseList = licenses?.licenses || [];
-
     return (
-        <div className="rounded-md border bg-white">
-            <Table>
+        <div className="overflow-hidden pb-10">
+            <Table className="border-b">
                 <TableHeader>
-                    <TableRow className="hover:bg-transparent bg-slate-50/50">
-                        <TableHead className="font-semibold text-slate-900">License ID</TableHead>
-                        <TableHead className="font-semibold text-slate-900">License Name</TableHead>
-                        <TableHead className="font-semibold text-slate-900">Reference URL</TableHead>
+                    <TableRow className="text-sm font-medium text-muted-foreground">
+                        <TableHead className="p-3 gap-2">License ID</TableHead>
+                        <TableHead className="p-3 gap-2">License Name</TableHead>
+                        <TableHead className="p-3 gap-2">Reference URL</TableHead>
                     </TableRow>
                 </TableHeader>
                 <TableBody>
                     {licenseList.length > 0 ? (
                         licenseList.map((license, idx) => (
-                            <TableRow key={idx}>
-                                <TableCell className="font-mono text-sm text-slate-700">
+                            <TableRow key={idx} className="text-sm text-foreground group">
+                                <TableCell className="p-3 gap-2">
                                     {license.licenseId || "N/A"}
                                 </TableCell>
-                                <TableCell className="text-slate-600">
+                                <TableCell className="p-3 gap-2">
                                     {license.name || license.licenseId || "N/A"}
                                 </TableCell>
                                 <TableCell>
                                     {license.links?.[0] ? (
-                                        <a
+                                        <Link
                                             href={license.links[0]}
                                             target="_blank"
                                             rel="noreferrer"
-                                            className="text-blue-600 hover:underline text-sm truncate max-w-xs block"
+                                            className=""
                                         >
                                             {license.links[0]}
-                                        </a>
+                                        </Link>
                                     ) : (
-                                        <span className="text-slate-400">—</span>
+                                        <span className="">—</span>
                                     )}
                                 </TableCell>
                             </TableRow>
