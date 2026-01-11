@@ -43,7 +43,6 @@ export function AnalysisTabs({ data }: AnalysisTabsProps) {
                     ))}
                 </TabsList>
             </div>
-
             <div className="w-full">
                 <TabsContent value="overview">
                     <SummaryTab malware={malware!} />
@@ -56,12 +55,10 @@ export function AnalysisTabs({ data }: AnalysisTabsProps) {
                 <TabsContent value="versions">
                     <VersionsTable
                         versions={insightDetails?.availableVersions || []}
-                        currentVersion={pkgVersion?.version || data.metadata.version}
                         packageName={pkgVersion?.package?.name || data.metadata.name}
                         ecosystem={data.metadata.ecosystem.toLowerCase()}
                     />
                 </TabsContent>
-
                 <TabsContent value="license">
                     <LicenseTable
                         licenses={insightDetails?.licenses || null}
