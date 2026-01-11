@@ -4,6 +4,7 @@ import { VulnerabilityTable } from "./tabs/VulnerabilityTable";
 import { LicenseTable } from "./tabs/LicenseTable";
 import { ConsolidatedPackageData } from "@/types/safedep";
 import { VersionsTable } from "./tabs/VersionTable";
+import { cn } from "@/lib/utils";
 
 interface AnalysisTabsProps {
     data: ConsolidatedPackageData;
@@ -15,48 +16,43 @@ export function AnalysisTabs({ data }: AnalysisTabsProps) {
     const pkgVersion = insights?.packageVersion;
     const insightDetails = insights?.insight;
 
+    const tabs = [
+        { id: "overview", label: "Overview" },
+        { id: "vulnerabilities", label: "Vulnerabilities" },
+        { id: "versions", label: "Versions" },
+        { id: "license", label: "License" },
+    ];
+
+    const triggerStyles = cn(
+        "data-[state=active]:bg-white data-[state=active]:text-foreground data-[state=active]:shadow-xs",
+        "rounded-none h-full px-3 py-1.5 text-muted-foreground text-sm rounded-lg font-medium transition-all"
+    );
+
     return (
         <Tabs defaultValue="overview" className="w-full">
-            <div className="border-b px-4 bg-slate-50/50">
-                <TabsList className="bg-transparent h-12 gap-6">
-                    <TabsTrigger
-                        value="overview"
-                        className="data-[state=active]:bg-transparent data-[state=active]:shadow-none data-[state=active]:border-b-2 data-[state=active]:border-primary rounded-none h-full px-0"
-                    >
-                        Overview
-                    </TabsTrigger>
-                    <TabsTrigger
-                        value="vulnerabilities"
-                        className="data-[state=active]:bg-transparent data-[state=active]:shadow-none data-[state=active]:border-b-2 data-[state=active]:border-primary rounded-none h-full px-0"
-                    >
-                        Vulnerabilities
-                    </TabsTrigger>
-                    <TabsTrigger
-                        value="versions"
-                        className="data-[state=active]:bg-transparent data-[state=active]:shadow-none data-[state=active]:border-b-2 data-[state=active]:border-primary rounded-none h-full px-0"
-                    >
-                        Versions
-                    </TabsTrigger>
-                    <TabsTrigger
-                        value="license"
-                        className="data-[state=active]:bg-transparent data-[state=active]:shadow-none data-[state=active]:border-b-2 data-[state=active]:border-primary rounded-none h-full px-0"
-                    >
-                        License
-                    </TabsTrigger>
+            <div className="border px-4 py-2 bg-background">
+                <TabsList className="bg-transparent h-14 gap-6">
+                    {tabs.map((tab) => (
+                        <TabsTrigger
+                            key={tab.id}
+                            value={tab.id}
+                            className={triggerStyles}
+                        >
+                            {tab.label}
+                        </TabsTrigger>
+                    ))}
                 </TabsList>
             </div>
 
-            <div className="p-6">
+            <div className="w-full">
                 <TabsContent value="overview">
                     <SummaryTab malware={malware!} />
                 </TabsContent>
-
                 <TabsContent value="vulnerabilities">
                     <VulnerabilityTable
                         vulnerabilities={insightDetails?.vulnerabilities || []}
                     />
                 </TabsContent>
-
                 <TabsContent value="versions">
                     <VersionsTable
                         versions={insightDetails?.availableVersions || []}
