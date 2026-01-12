@@ -14,14 +14,12 @@ import { VersionItem } from "@/types/safedep";
 
 interface VersionsTableProps {
     versions: VersionItem[];
-    currentVersion: string;
     ecosystem: string;
     packageName: string;
 }
 
 export function VersionsTable({
     versions,
-    currentVersion,
     ecosystem,
     packageName
 }: VersionsTableProps) {
@@ -30,30 +28,25 @@ export function VersionsTable({
     );
 
     return (
-        <div className="rounded-md border bg-white overflow-hidden">
-            <Table>
+        <div className="pb-10 overflow-hidden">
+            <Table className="border-b">
                 <TableHeader>
-                    <TableRow className="hover:bg-transparent bg-slate-50/50">
-                        <TableHead className="font-semibold text-slate-900">Version</TableHead>
-                        <TableHead className="font-semibold text-slate-900">Published On</TableHead>
-                        <TableHead className="text-right font-semibold text-slate-900"></TableHead>
+                    <TableRow className="text-sm font-medium text-muted-foreground">
+                        <TableHead className="p-3 gap-2">Version</TableHead>
+                        <TableHead className="p-3 gap-2">Published On</TableHead>
+                        <TableHead className="p-3 gap-2"></TableHead>
                     </TableRow>
                 </TableHeader>
                 <TableBody>
                     {reversedVersions.map((version, index) => {
-                        const isCurrent = version.version === currentVersion;
                         const isLatest = index === 0;
-
                         return (
-                            <TableRow key={version.version} className="group">
-                                <TableCell className="py-4">
-                                    <div className="flex items-center gap-3">
-                                        <span className={cn(
-                                            "text-sm transition-colors",
-                                            isCurrent ? "text-blue-600 font-bold" : "text-slate-600"
-                                        )}>
+                            <TableRow key={version.version} className="text-sm text-foreground group">
+                                <TableCell className="p-3 gap-2">
+                                    <div className="flex items-center gap-2">
+                                        <Badge className="">
                                             {version.version}
-                                        </span>
+                                        </Badge>
                                         {isLatest && (
                                             <Badge
                                                 variant="secondary"
@@ -64,7 +57,7 @@ export function VersionsTable({
                                         )}
                                     </div>
                                 </TableCell>
-                                <TableCell className="text-slate-500 font-mono text-xs">
+                                <TableCell className="">
                                     {formatDate(version.publishedAt)}
                                 </TableCell>
                                 <TableCell className="text-right">

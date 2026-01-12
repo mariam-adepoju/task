@@ -1,6 +1,16 @@
 import type { Metadata } from "next";
-import { Inter_Tight, } from "next/font/google";
+import { Geist, Geist_Mono, Inter_Tight, } from "next/font/google";
 import "./globals.css";
+
+const geistSans = Geist({
+  variable: "--font-geist-sans",
+  subsets: ["latin"],
+});
+
+const geistMono = Geist_Mono({
+  variable: "--font-geist-mono",
+  subsets: ["latin"],
+});
 
 const interTight = Inter_Tight({
   variable: "--font-intertight",
@@ -20,7 +30,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${interTight.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} ${interTight.variable} antialiased`}
       >
         {children}
       </body>

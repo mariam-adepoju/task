@@ -14,10 +14,12 @@ export default async function PackagePage({ params }: { params: Promise<any> }) 
         metadata: { name, version, ecosystem }
     };
     return (
-        <div className="flex flex-col">
-            <PackageHero data={packageData} />
-            <StatsGrid data={packageData} />
-            <div className="bg-background border rounded-b-xl shadow-sm">
+        <div className="w-full flex flex-col">
+            <div className="bg-slate-50 px-6 py-4 border-b space-y-6">
+                <PackageHero data={packageData} />
+                <StatsGrid data={packageData} />
+            </div>
+            <div className="w-full">
                 <AnalysisTabs data={packageData} />
             </div>
         </div>

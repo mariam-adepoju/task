@@ -5,6 +5,15 @@ const nextConfig: NextConfig = {
   experimental: {
     turbopackFileSystemCacheForDev: true,
   },
+  images: {
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "mintcdn.com",
+        pathname: "/**",
+      },
+    ],
+  },
 };
 
 export default nextConfig;

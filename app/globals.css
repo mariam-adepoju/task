@@ -6,6 +6,9 @@
 @theme inline {
   --color-mauve-3: var(--mauve-3);
   --color-mauve-12: var(--mauve-12);
+  --color-slate-1: var(--slate-1);
+  --color-slate-5: var(--slate-5);
+  --color-neutral-12: var(--neutral-12);
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --font-intertight: var(--font-intertight);
@@ -50,7 +53,7 @@
 :root {
   --radius: 0.25rem;
   --background: #f1f5f9 /*oklch(1 0 0)*/;
-  --foreground: oklch(0.145 0 0);
+  --foreground: #020618 /*oklch(0.145 0 0)*/;
   --card: oklch(1 0 0);
   --card-foreground: oklch(0.145 0 0);
   --popover: oklch(1 0 0);
@@ -60,7 +63,7 @@
   --secondary: oklch(0.97 0 0);
   --secondary-foreground: oklch(0.205 0 0);
   --muted: oklch(0.97 0 0);
-  --muted-foreground: oklch(0.556 0 0);
+  --muted-foreground: #62748e /*oklch(0.556 0 0)*/;
   --accent: oklch(0.97 0 0);
   --accent-foreground: oklch(0.205 0 0);
   --destructive: oklch(0.577 0.245 27.325);
@@ -82,6 +85,9 @@
   --sidebar-ring: oklch(0.708 0 0);
   --mauve-3: #f2eff3;
   --mauve-12: #211f26;
+  --slate-1: #fcfcfd;
+  --slate-5: #e0e1e5;
+  --neutral-12: #1c2024;
 }
 
 .dark {
