@@ -5,23 +5,27 @@ import { StatsGrid } from "@/components/package/StatsGrid";
 import { ConsolidatedPackageData } from "@/types/safedep";
 
 
-export default async function PackagePage({ params }: { params: Promise<any> }) {
+export default async function PackagePage({ params }: { params: { ecosystem: string; name: string; version: string } }) {
     const { ecosystem, name, version } = await params;
     const { insights, malware } = await getPackageData(ecosystem, name, version);
-    const packageData: ConsolidatedPackageData = {
-        insights,
-        malware,
-        metadata: { name, version, ecosystem }
-    };
-    return (
-        <div className="w-full flex flex-col">
-            <div className="bg-slate-50 px-6 py-4 border-b space-y-6">
-                <PackageHero data={packageData} />
-                <StatsGrid data={packageData} />
+    try {
+        const packageData: ConsolidatedPackageData = {
+            insights,
+            malware,
+            metadata: { name, version, ecosystem }
+        };
+        return (
+            <div className="w-full flex flex-col">
+                <div className="bg-slate-50 px-6 py-4 border-b space-y-6">
+                    <PackageHero data={packageData} />
+                    <StatsGrid data={packageData} />
+                </div>
+                <div className="w-full">
+                    <AnalysisTabs data={packageData} />
+                </div>
             </div>
-            <div className="w-full">
-                <AnalysisTabs data={packageData} />
-            </div>
-        </div>
-    );
+        );
+    } catch (err: any) {
+        throw err;
+    }
 }
