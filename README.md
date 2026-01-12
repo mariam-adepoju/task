@@ -94,7 +94,5 @@ The dashboard dynamically generates reports based on the ecosystem, package name
 - **Next.js(NPM):** http://localhost:3000/p/npm/next/13.2.4
 
 ## Architecture Note
-The application follows a Consolidated Data Pattern. Data from the Insights and Malysis services are merged on the server into a unified ConsolidatedPackageData object. This ensures the 
-
-UI components receive a predictable, strictly typed data structure, reducing client-side logic complexity and improving performance.
+The application follows a Consolidated Data Pattern. Data from the Insights and Malysis services are merged on the server into a unified ConsolidatedPackageData object. This ensures the UI components receive a predictable, strictly typed data structure, reducing client-side logic complexity and improving performance.
 
