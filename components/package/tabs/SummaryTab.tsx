@@ -6,7 +6,7 @@ export function SummaryTab({ malware }: { malware: MalwareReport }) {
     const inference = malware?.report?.inference;
 
     return (
-        <section className="max-w-200 py-12 space-y-6 mx-auto">
+        <section className="max-w-200 py-12 px-5 space-y-6 mx-auto">
             <article className="relative gap-2 p-6 border-l-4 border-primary">
                 <h3 className="text-xl font-medium text-neutral-12">Summary</h3>
                 <div className="space-y-2">
