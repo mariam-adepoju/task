@@ -1,5 +1,4 @@
 "use server";
-
 import { mapEcosystem } from "@/server/safedep/ecosystem";
 import { getPackageInsights } from "@/server/safedep/insights";
 import { getPackageMalwareAnalysis } from "@/server/safedep/malysis";
@@ -9,29 +8,34 @@ export async function getPackageData(
   name: string,
   version: string
 ) {
-  // Validate inputs
   if (!ecosystem || !name || !version) {
     throw new Error("Ecosystem, name, and version are all required");
   }
   const ecoEnum = mapEcosystem(ecosystem);
-  // Run RPC calls concurrently with try/catch to prevent runtime crash
-  const [insights, malware] = await Promise.all([
-    getPackageInsights(ecoEnum, name, version).catch((err) => {
-      console.warn("Error fetching insights:", err);
-      return null;
-    }),
-    getPackageMalwareAnalysis(ecoEnum, name, version).catch((err) => {
-      console.warn("Error fetching malware analysis:", err);
-      return null;
-    }),
+  const [insightsResult, malwareResult] = await Promise.allSettled([
+    getPackageInsights(ecoEnum, name, version),
+    getPackageMalwareAnalysis(ecoEnum, name, version),
   ]);
+  const isInsightsRejected = insightsResult.status === "rejected";
+  const isMalwareRejected = malwareResult.status === "rejected";
 
+  const insights =
+    insightsResult.status === "fulfilled" ? insightsResult.value : null;
+  const malware =
+    malwareResult.status === "fulfilled" ? malwareResult.value : null;
   if (!insights && !malware) {
-    throw new Error("No data available for this package");
+    if (isInsightsRejected || isMalwareRejected) {
+      throw new Error("PACKAGE_NOT_FOUND: package not found.");
+    } else {
+      throw new Error(
+        "NETWORK_ERROR: Unable to connect to SafeDep. Please check your internet or API key."
+      );
+    }
   }
-  console.log("Fetched package data:", { insights, malware });
+  // console.log("Fetched package data for", { insights, malware });
   return {
     insights,
     malware,
+    metadata: { ecosystem, name, version },
   };
 }
