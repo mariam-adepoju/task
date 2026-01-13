@@ -1,27 +1,33 @@
 import { ConfidenceLevel } from "@/types/safedep";
+import {
+  AlertOctagon,
+  AlertTriangle,
+  AlertCircle,
+  ShieldCheck,
+  Info,
+} from "lucide-react";
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
-export function getRiskStyles(risk: string = "") {
+export function getRiskConfig(risk: string = "") {
   const normalized = risk.toLowerCase();
 
   if (normalized.includes("critical")) {
-    return "bg-red-100 text-red-700 border-red-200 hover:bg-red-100";
+    return { styles: "bg-red-50 text-red-700", icon: AlertOctagon };
   }
   if (normalized.includes("high")) {
-    return "bg-orange-100 text-orange-700 border-orange-200 hover:bg-orange-100";
+    return { styles: "bg-pink-100 text-pink-700", icon: AlertTriangle };
   }
   if (normalized.includes("medium")) {
-    return "bg-yellow-100 text-yellow-700 border-yellow-200 hover:bg-yellow-100";
+    return { styles: "bg-yellow-100 text-yellow-700", icon: AlertCircle };
   }
   if (normalized.includes("low")) {
-    return "bg-emerald-100 text-emerald-700 border-emerald-200 hover:bg-emerald-100";
+    return { styles: "bg-cyan-50 text-cyan-700", icon: Info };
   }
-
-  return "bg-slate-100 text-slate-700 border-slate-200 hover:bg-slate-100";
+  return { styles: "bg-neutral-100 text-neutral-600", icon: ShieldCheck };
 }
 export function formatRiskLabel(risk: string = "") {
   return risk.replace("RISK_", "").toLowerCase() || "unspecified";

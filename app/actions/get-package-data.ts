@@ -16,6 +16,7 @@ export async function getPackageData(
     getPackageInsights(ecoEnum, name, version),
     getPackageMalwareAnalysis(ecoEnum, name, version),
   ]);
+
   const isInsightsRejected = insightsResult.status === "rejected";
   const isMalwareRejected = malwareResult.status === "rejected";
 
@@ -23,16 +24,24 @@ export async function getPackageData(
     insightsResult.status === "fulfilled" ? insightsResult.value : null;
   const malware =
     malwareResult.status === "fulfilled" ? malwareResult.value : null;
+
+  if (insights?.insight?.availableVersions) {
+    insights.insight.availableVersions = insights.insight.availableVersions
+      .sort(
+        (a, b) =>
+          new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime()
+      )
+      .slice(0, 100);
+  }
+
   if (!insights && !malware) {
-    if (isInsightsRejected || isMalwareRejected) {
-      throw new Error("PACKAGE_NOT_FOUND: package not found.");
-    } else {
+    if (isInsightsRejected && isMalwareRejected) {
       throw new Error(
-        "NETWORK_ERROR: Unable to connect to SafeDep. Please check your internet or API key."
+        "NETWORK_ERROR: Services unreachable. Check your API key or connection."
       );
     }
   }
-  // console.log("Fetched package data for", { insights, malware });
+  // console.log(insights, malware);
   return {
     insights,
     malware,
