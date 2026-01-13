@@ -24,6 +24,7 @@ export async function getPackageMalwareAnalysis(
         },
       },
     });
+    // if (!res) return null;
     // console.log(toJson(QueryPackageAnalysisResponseSchema, res));
     return toJson(
       QueryPackageAnalysisResponseSchema,
@@ -34,7 +35,7 @@ export async function getPackageMalwareAnalysis(
       console.warn(`[Malware Analysis] No data for ${name}@${version}`);
       return null;
     }
-    console.error("Malware Analysis Error:", err);
-    return null;
+    console.error("Malware Analysis Technical Error:", err);
+    throw err;
   }
 }

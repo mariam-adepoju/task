@@ -11,19 +11,19 @@ import Link from "next/link";
 import { ExternalLink } from "lucide-react";
 import { cn, formatEcosystem, formatDate } from "@/lib/utils";
 import { VersionItem } from "@/types/safedep";
+import { useMemo } from "react";
 
 interface VersionsTableProps {
     versions: VersionItem[];
     ecosystem: string;
     packageName: string;
 }
-
 export function VersionsTable({
     versions,
     ecosystem,
     packageName
 }: VersionsTableProps) {
-    const reversedVersions = [...versions].sort((a, b) =>
+    const sortedVersions = [...versions].sort((a, b) =>
         new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime()
     );
 
@@ -38,42 +38,43 @@ export function VersionsTable({
                     </TableRow>
                 </TableHeader>
                 <TableBody>
-                    {reversedVersions.map((version, index) => {
+                    {sortedVersions.map((version, index) => {
                         const isLatest = index === 0;
                         return (
                             <TableRow key={version.version} className="text-sm text-foreground group">
                                 <TableCell className="p-3 gap-2">
                                     <div className="flex items-center gap-2">
-                                        <Badge className="">
+                                        <Badge variant={"ghost"} className="text-xs font-medium rounded-lg p-1">
                                             {version.version}
                                         </Badge>
                                         {isLatest && (
-                                            <Badge
-                                                variant="secondary"
-                                                className="bg-emerald-100 text-emerald-700 border-emerald-200 hover:bg-emerald-100 py-0 text-[10px] uppercase font-bold tracking-wider"
+                                            <Badge variant={"success"} className="text-xs font-medium rounded-lg py-0.5 px-1.5"
                                             >
                                                 Latest
                                             </Badge>
                                         )}
                                     </div>
                                 </TableCell>
-                                <TableCell className="">
+                                <TableCell className="p-3 gap-2 tabular-nums">
                                     {formatDate(version.publishedAt)}
                                 </TableCell>
-                                <TableCell className="text-right">
+                                <TableCell className="p-3 gap-2">
                                     <Link
-                                        // Using the helper to ensure the URL ecosystem matches the API expectation
                                         href={`/p/${formatEcosystem(ecosystem)}/${packageName}/${version.version}`}
-                                        className={cn(
-                                            "inline-flex items-center gap-1 text-xs font-semibold transition-all",
-                                            "text-teal-600 hover:text-teal-700",
-                                            "opacity-0 group-hover:opacity-100 translate-x-2 group-hover:translate-x-0"
-                                        )}
+                                        className="inline-flex items-center gap-1 text-sm text-primary transition-all"
                                     >
-                                        View Analysis
-                                        <ExternalLink className="h-3 w-3" />
+                                        <span className="group-hover:opacity-80 transition-opacity">
+                                            View Version
+                                        </span>
+                                        <ExternalLink size={20}
+                                            className={cn(
+                                                "opacity-0 transition-all duration-200",
+                                                "group-hover:opacity-100"
+                                            )}
+                                        />
                                     </Link>
                                 </TableCell>
+
                             </TableRow>
                         );
                     })}

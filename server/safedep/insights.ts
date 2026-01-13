@@ -25,7 +25,7 @@ export async function getPackageInsights(
       res
     ) as unknown as PackageInsight;
   } catch (err) {
-    console.error("Insights Fetch Error:", err);
-    return null;
+    console.error("Insights Error:", err);
+    throw err;
   }
 }
