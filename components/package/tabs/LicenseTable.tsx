@@ -21,20 +21,20 @@ export function LicenseTable({ licenses }: LicenseTableProps) {
         <div className="overflow-hidden pb-10">
             <Table className="border-b">
                 <TableHeader>
-                    <TableRow className="text-sm font-medium text-muted-foreground">
-                        <TableHead className="p-3 gap-2">License ID</TableHead>
-                        <TableHead className="p-3 gap-2">License Name</TableHead>
-                        <TableHead className="p-3 gap-2">Reference URL</TableHead>
+                    <TableRow className="text-sm font-medium text-muted-foreground [&>th]:p-2 [&>th]:md:p-3 [&>th]:gap-2">
+                        <TableHead>License ID</TableHead>
+                        <TableHead>License Name</TableHead>
+                        <TableHead>Reference URL</TableHead>
                     </TableRow>
                 </TableHeader>
                 <TableBody>
                     {licenseList.length > 0 ? (
                         licenseList.map((license, idx) => (
-                            <TableRow key={idx} className="text-sm text-foreground group">
-                                <TableCell className="p-3 gap-2">
+                            <TableRow key={idx} className="text-sm text-foreground group [&>td]:p-2 [&>td]:md:p-3 [&>td]:gap-2">
+                                <TableCell>
                                     {license.licenseId || "N/A"}
                                 </TableCell>
-                                <TableCell className="p-3 gap-2">
+                                <TableCell>
                                     {license.name || license.licenseId || "N/A"}
                                 </TableCell>
                                 <TableCell>
@@ -43,7 +43,7 @@ export function LicenseTable({ licenses }: LicenseTableProps) {
                                             href={license.links[0]}
                                             target="_blank"
                                             rel="noreferrer"
-                                            className=""
+                                            className="truncate"
                                         >
                                             {license.links[0]}
                                         </Link>

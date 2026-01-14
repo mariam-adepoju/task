@@ -2,6 +2,7 @@ import { ConsolidatedPackageData } from "@/types/safedep"; // Import your new ty
 import { formatFullDate } from "@/lib/utils";
 import Image from "next/image";
 import Link from "next/link";
+import { CopyableValue } from "../CopyableValue";
 
 interface PackageHeroProps {
     data: ConsolidatedPackageData;
@@ -27,12 +28,19 @@ export function PackageHero({ data }: PackageHeroProps) {
                     <span className="text-slate-500 text-xs">Analyzed at</span>
                     <span className="text-foreground text-xs tracking-[0.04px]">{formatFullDate(analyzedAt)}</span>
                 </div>
-                <div className="flex gap-1 items-center">
+                <div className="flex gap-1 items-center min-w-0 w-full">
                     <span className="text-slate-500 text-xs">Source</span>
                     {source !== "Not Available" ? (
-                        <Link href={source} target="_blank" rel="noreferrer" className="text-foreground text-xs tracking-[0.04px]">
-                            {source}
-                        </Link>
+                        <div className="flex items-center gap-1 min-w-0 flex-1">
+                            <Link
+                                href={source}
+                                rel="noreferrer"
+                                className="text-foreground text-xs tracking-[0.04px] truncate hover:underline min-w-0"
+                                title={source}
+                            >
+                                {source}
+                            </Link>
+                        </div>
                     ) : (
                         <span className="text-foreground text-xs tracking-[0.04px]">Not Available</span>
                     )}
@@ -40,9 +48,8 @@ export function PackageHero({ data }: PackageHeroProps) {
                 <div className="flex gap-1 items-center">
                     <span className="text-slate-500 text-xs">SHA256</span>
                     {sha256 !== "Not Available" ? (
-                        <span className="text-foreground text-xs tracking-[0.04px]">
-                            {sha256}
-                        </span>
+
+                        <CopyableValue value={sha256} className="flex-1" />
                     ) : (
                         <span className="text-foreground text-xs tracking-[0.04px]">Not Available</span>
                     )}
@@ -50,9 +57,8 @@ export function PackageHero({ data }: PackageHeroProps) {
                 <div className="flex gap-1 items-center">
                     <span className="text-slate-500 text-xs">Confidence</span>
                     {sha256 !== "Not Available" ? (
-                        <span className="text-foreground text-xs tracking-[0.04px]">
-                            {sha256}
-                        </span>
+
+                        <CopyableValue value={sha256} className="flex-1" />
                     ) : (
                         <span className="text-foreground text-xs tracking-[0.04px]">Not Available</span>
                     )}
