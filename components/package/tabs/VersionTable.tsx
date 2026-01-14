@@ -11,7 +11,6 @@ import Link from "next/link";
 import { ExternalLink } from "lucide-react";
 import { cn, formatEcosystem, formatDate } from "@/lib/utils";
 import { VersionItem } from "@/types/safedep";
-import { useMemo } from "react";
 
 interface VersionsTableProps {
     versions: VersionItem[];
@@ -23,26 +22,24 @@ export function VersionsTable({
     ecosystem,
     packageName
 }: VersionsTableProps) {
-    const sortedVersions = [...versions].sort((a, b) =>
-        new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime()
-    );
+
 
     return (
         <div className="pb-10 overflow-hidden">
             <Table className="border-b">
                 <TableHeader>
-                    <TableRow className="text-sm font-medium text-muted-foreground">
-                        <TableHead className="p-3 gap-2">Version</TableHead>
-                        <TableHead className="p-3 gap-2">Published On</TableHead>
-                        <TableHead className="p-3 gap-2"></TableHead>
+                    <TableRow className="text-sm font-medium text-muted-foreground [&>th]:p-2 [&>th]:md:p-3 [&>th]:gap-2">
+                        <TableHead>Version</TableHead>
+                        <TableHead>Published On</TableHead>
+                        <TableHead></TableHead>
                     </TableRow>
                 </TableHeader>
                 <TableBody>
-                    {sortedVersions.map((version, index) => {
+                    {versions.map((version, index) => {
                         const isLatest = index === 0;
                         return (
-                            <TableRow key={version.version} className="text-sm text-foreground group">
-                                <TableCell className="p-3 gap-2">
+                            <TableRow key={version.version} className="text-sm text-foreground group [&>td]:p-2 [&>td]:md:p-3 [&>td]:gap-2">
+                                <TableCell>
                                     <div className="flex items-center gap-2">
                                         <Badge variant={"ghost"} className="text-xs font-medium rounded-lg p-1">
                                             {version.version}
@@ -55,10 +52,10 @@ export function VersionsTable({
                                         )}
                                     </div>
                                 </TableCell>
-                                <TableCell className="p-3 gap-2 tabular-nums">
+                                <TableCell>
                                     {formatDate(version.publishedAt)}
                                 </TableCell>
-                                <TableCell className="p-3 gap-2">
+                                <TableCell>
                                     <Link
                                         href={`/p/${formatEcosystem(ecosystem)}/${packageName}/${version.version}`}
                                         className="inline-flex items-center gap-1 text-sm text-primary transition-all"
