@@ -24,7 +24,6 @@ export async function getPackageMalwareAnalysis(
         },
       },
     });
-    // if (!res) return null;
     // console.log(toJson(QueryPackageAnalysisResponseSchema, res));
     return toJson(
       QueryPackageAnalysisResponseSchema,
