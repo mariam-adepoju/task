@@ -23,7 +23,6 @@ export function VersionsTable({
     packageName
 }: VersionsTableProps) {
 
-
     return (
         <div className="pb-10 overflow-hidden">
             <Table className="border-b">
