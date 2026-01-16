@@ -53,10 +53,10 @@ export function formatFullDate(dateString: string | undefined) {
     year: "numeric",
     hour: "2-digit",
     minute: "2-digit",
-    hour12: false, // Ensures 24-hour format
+    hour12: false,
   })
     .format(date)
-    .replace(",", ""); // Standard Intl adds a comma we might want to control
+    .replace(",", "");
 }
 export const formatConfidence = (conf?: ConfidenceLevel) => {
   if (!conf) return "N/A";
